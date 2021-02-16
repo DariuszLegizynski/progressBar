@@ -2,25 +2,30 @@ import { useState } from "react";
 import "./App.css";
 
 function App() {
-	const [bar, setBar] = useState(0);
+	let [bar, setBar] = useState(0);
 
-	if (bar > 100) {
-		setBar(0);
-	}
+	const myStyle = {
+		width: `${bar}%`,
+	};
 
-	console.log(bar);
+	const fillBar = () => {
+		const interval = setInterval(() => {
+			setBar(bar++);
+			console.log(bar);
+			if (bar >= 100) {
+				console.log("bar greater");
+				clearInterval(interval);
+				setBar(0);
+			}
+		}, 100);
+	};
 
 	return (
 		<section className="App">
 			<div className="App__div">
-				<div
-					style={{ width: `${bar}%` }}
-					className="bar"
-				/>
+				<div style={myStyle} className="bar" />
 			</div>
-			<button onClick={() => setBar(bar + 5)}>
-				Start
-			</button>
+			<button onClick={fillBar}>Start</button>
 		</section>
 	);
 }
